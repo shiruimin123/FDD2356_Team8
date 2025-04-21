@@ -22,7 +22,7 @@ def extrapolateInSpaceToFace_cython(double[:, :] f,
     
     # Calculate face values
     for i in prange(nx, nogil=True):
-        for j in prange(ny, nogil=True):
+        for j in prange(ny):
             f_XR[i,j] = f[i,j] + f_dx[i,j] * dx/2
             f_XL[i,j] = f[i,j] - f_dx[i,j] * dx/2
             f_YR[i,j] = f[i,j] + f_dy[i,j] * dx/2
@@ -71,7 +71,7 @@ def getFlux(double[:, :] rho_L, double[:, :] rho_R,
     cdef double C_L, C_R, C
     
     for i in prange(nx,nogil=True):
-        for j in prange(ny,nogil=True):
+        for j in prange(ny):
             # left and right energies
             en_L = P_L[i,j]/(gamma-1) + 0.5*rho_L[i,j] * (vx_L[i,j]**2 + vy_L[i,j]**2)
             en_R = P_R[i,j]/(gamma-1) + 0.5*rho_R[i,j] * (vx_R[i,j]**2 + vy_R[i,j]**2)
