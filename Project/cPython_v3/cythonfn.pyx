@@ -15,6 +15,10 @@ def set_max_threads():
     print(f"Setting OpenMP threads to maximum available: {max_threads}")
     omp_set_num_threads(max_threads)
 
+def set_threads(int n):
+    print(f"Setting OpenMP threads: {n}")
+    omp_set_num_threads(n)
+
 
 def extrapolateInSpaceToFace(double[:, :] f, 
                                   double[:, :] f_dx, 

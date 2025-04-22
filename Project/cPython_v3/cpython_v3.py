@@ -143,7 +143,7 @@ def applyFluxes(F, flux_F_X, flux_F_Y, dx, dt):
 
 
 
-def cpython_v3(N = 256,whether_plot=True):
+def cpython_v3(N = 256,whether_plot=True,threads=8):
 	""" Finite Volume simulation """
 	
 	# Simulation parameters
@@ -156,7 +156,7 @@ def cpython_v3(N = 256,whether_plot=True):
 	tOut                   = 0.02 # draw frequency
 	useSlopeLimiting       = False
 	plotRealTime = True # switch on for plotting as the simulation goes along
-	cythonfn.set_max_threads()
+	cythonfn.set_threads(threads)
 	# Mesh
 	dx = boxsize / N
 	vol = dx**2
