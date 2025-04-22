@@ -4,8 +4,7 @@ cimport cython
 from libc.math cimport sqrt, fabs
 from cython.parallel cimport prange
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
+
 
 cdef extern from "omp.h":
     void omp_set_num_threads(int)
@@ -16,6 +15,8 @@ cdef set_max_threads():
     print(f"Setting OpenMP threads to maximum available: {max_threads}")
     omp_set_num_threads(max_threads)
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def extrapolateInSpaceToFace_cython(double[:, :] f, 
                                   double[:, :] f_dx, 
                                   double[:, :] f_dy, 
