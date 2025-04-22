@@ -65,6 +65,7 @@ def extrapolateInSpaceToFace(double[:, :] f,
     
     return f_XL_rolled, f_XR, f_YL_rolled, f_YR
 
+
 def getFlux(double[:, :] rho_L, double[:, :] rho_R,
                   double[:, :] vx_L, double[:, :] vx_R,
                   double[:, :] vy_L, double[:, :] vy_R,

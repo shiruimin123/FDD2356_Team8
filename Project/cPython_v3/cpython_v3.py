@@ -54,6 +54,32 @@ def getPrimitive( Mass, Momx, Momy, Energy, gamma, vol ):
 	
 	return rho, vx, vy, P
 
+def extrapolateInSpaceToFace(f, f_dx, f_dy, dx):
+	"""
+    Calculate the gradients of a field
+	f        is a matrix of the field
+	f_dx     is a matrix of the field x-derivatives
+	f_dy     is a matrix of the field y-derivatives
+	dx       is the cell size
+	f_XL     is a matrix of spatial-extrapolated values on `left' face along x-axis 
+	f_XR     is a matrix of spatial-extrapolated values on `right' face along x-axis 
+	f_YL     is a matrix of spatial-extrapolated values on `left' face along y-axis 
+	f_YR     is a matrix of spatial-extrapolated values on `right' face along y-axis 
+	"""
+	# directions for np.roll() 
+
+	R = -1   # right
+	L = 1    # left
+	
+	f_XL = f - f_dx * dx/2
+	f_XL = np.roll(f_XL,R,axis=0)
+	f_XR = f + f_dx * dx/2
+	
+	f_YL = f - f_dy * dx/2
+	f_YL = np.roll(f_YL,R,axis=1)
+	f_YR = f + f_dy * dx/2
+	
+	return f_XL, f_XR, f_YL, f_YR
 
 def getGradient(f, dx):
 	"""
@@ -188,10 +214,10 @@ def cpython_v3(N = 256,whether_plot=True):
 		P_prime   = P   - 0.5*dt * ( gamma*P * (vx_dx + vy_dy)  + vx * P_dx + vy * P_dy )
 		
 		# extrapolate in space to face centers
-		rho_XL, rho_XR, rho_YL, rho_YR = cythonfn.extrapolateInSpaceToFace(rho_prime, rho_dx, rho_dy, dx)
-		vx_XL,  vx_XR,  vx_YL,  vx_YR  = cythonfn.extrapolateInSpaceToFace(vx_prime,  vx_dx,  vx_dy,  dx)
-		vy_XL,  vy_XR,  vy_YL,  vy_YR  = cythonfn.extrapolateInSpaceToFace(vy_prime,  vy_dx,  vy_dy,  dx)
-		P_XL,   P_XR,   P_YL,   P_YR   = cythonfn.extrapolateInSpaceToFace(P_prime,   P_dx,   P_dy,   dx)
+		rho_XL, rho_XR, rho_YL, rho_YR = extrapolateInSpaceToFace(rho_prime, rho_dx, rho_dy, dx)
+		vx_XL,  vx_XR,  vx_YL,  vx_YR  = extrapolateInSpaceToFace(vx_prime,  vx_dx,  vx_dy,  dx)
+		vy_XL,  vy_XR,  vy_YL,  vy_YR  = extrapolateInSpaceToFace(vy_prime,  vy_dx,  vy_dy,  dx)
+		P_XL,   P_XR,   P_YL,   P_YR   = extrapolateInSpaceToFace(P_prime,   P_dx,   P_dy,   dx)
 		
 		# compute fluxes (local Lax-Friedrichs/Rusanov)
 		flux_Mass_X, flux_Momx_X, flux_Momy_X, flux_Energy_X = cythonfn.getFlux(rho_XL, rho_XR, vx_XL, vx_XR, vy_XL, vy_XR, P_XL, P_XR, gamma)
