@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import cProfile
-from line_profiler import profile
 from timeit import default_timer
 import cythonfn
 # from memory_profiler import profile

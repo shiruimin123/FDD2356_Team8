@@ -17,7 +17,7 @@ cdef set_max_threads():
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-def extrapolateInSpaceToFace_cython(double[:, :] f, 
+def extrapolateInSpaceToFace(double[:, :] f, 
                                   double[:, :] f_dx, 
                                   double[:, :] f_dy, 
                                   double dx):
