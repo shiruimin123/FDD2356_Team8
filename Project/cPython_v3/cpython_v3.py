@@ -130,7 +130,7 @@ def cpython_v3(N = 256,whether_plot=True):
 	tOut                   = 0.02 # draw frequency
 	useSlopeLimiting       = False
 	plotRealTime = True # switch on for plotting as the simulation goes along
-	
+	cythonfn.set_max_threads()
 	# Mesh
 	dx = boxsize / N
 	vol = dx**2

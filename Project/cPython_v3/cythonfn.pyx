@@ -15,14 +15,12 @@ cdef set_max_threads():
     print(f"Setting OpenMP threads to maximum available: {max_threads}")
     omp_set_num_threads(max_threads)
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
+
 def extrapolateInSpaceToFace(double[:, :] f, 
                                   double[:, :] f_dx, 
                                   double[:, :] f_dy, 
                                   double dx):
 
-    set_max_threads()
  
     cdef int i, j
     cdef int nx = f.shape[0]
@@ -75,7 +73,7 @@ def getFlux(double[:, :] rho_L, double[:, :] rho_R,
     """
     Cython-optimized version of getFlux using memoryviews
     """
-    set_max_threads()
+
     cdef int i, j
     cdef int nx = rho_L.shape[0]
     cdef int ny = rho_L.shape[1]
