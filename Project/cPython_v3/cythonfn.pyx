@@ -10,7 +10,7 @@ cdef extern from "omp.h":
     void omp_set_num_threads(int)
     int omp_get_max_threads()
 
-cdef set_max_threads():
+def set_max_threads():
     cdef int max_threads = omp_get_max_threads()
     print(f"Setting OpenMP threads to maximum available: {max_threads}")
     omp_set_num_threads(max_threads)
