@@ -37,7 +37,7 @@ def extrapolateInSpaceToFace(double[:, :] f,
 
     with nogil:
         for i in prange(nx, schedule='static'):
-            for j in prange(ny):
+            for j in range(ny):
                 f_XR[i,j] = f[i,j] + f_dx[i,j] * dx/2
                 f_XL[i,j] = f[i,j] - f_dx[i,j] * dx/2
                 f_YR[i,j] = f[i,j] + f_dy[i,j] * dx/2
@@ -89,7 +89,7 @@ def getFlux(double[:, :] rho_L, double[:, :] rho_R,
     
     with nogil:
         for i in prange(nx, schedule='static'):
-            for j in prange(ny):
+            for j in range(ny):
                 # left and right energies
                 en_L = P_L[i,j]/(gamma-1) + 0.5*rho_L[i,j] * (vx_L[i,j]**2 + vy_L[i,j]**2)
                 en_R = P_R[i,j]/(gamma-1) + 0.5*rho_R[i,j] * (vx_R[i,j]**2 + vy_R[i,j]**2)
