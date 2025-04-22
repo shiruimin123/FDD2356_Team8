@@ -2,10 +2,11 @@ import numpy as np
 cimport numpy as np
 cimport cython
 from libc.math cimport sqrt, fabs
+from cython.parallel cimport prange
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-from cython.parallel cimport prange
+
 cdef extern from "omp.h":
     void omp_set_num_threads(int)
     int omp_get_max_threads()
