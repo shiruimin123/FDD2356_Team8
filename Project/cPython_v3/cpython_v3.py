@@ -56,33 +56,6 @@ def getPrimitive( Mass, Momx, Momy, Energy, gamma, vol ):
 	
 	return rho, vx, vy, P
 
-def extrapolateInSpaceToFace(f, f_dx, f_dy, dx):
-
-	"""
-    Calculate the gradients of a field
-	f        is a matrix of the field
-	f_dx     is a matrix of the field x-derivatives
-	f_dy     is a matrix of the field y-derivatives
-	dx       is the cell size
-	f_XL     is a matrix of spatial-extrapolated values on `left' face along x-axis 
-	f_XR     is a matrix of spatial-extrapolated values on `right' face along x-axis 
-	f_YL     is a matrix of spatial-extrapolated values on `left' face along y-axis 
-	f_YR     is a matrix of spatial-extrapolated values on `right' face along y-axis 
-	"""
-	# directions for np.roll() 
-
-	R = -1   # right
-	L = 1    # left
-	
-	f_XL = f - f_dx * dx/2
-	f_XL = np.roll(f_XL,R,axis=0)
-	f_XR = f + f_dx * dx/2
-	
-	f_YL = f - f_dy * dx/2
-	f_YL = np.roll(f_YL,R,axis=1)
-	f_YR = f + f_dy * dx/2
-	
-	return f_XL, f_XR, f_YL, f_YR
 
 def getGradient(f, dx):
 	"""
